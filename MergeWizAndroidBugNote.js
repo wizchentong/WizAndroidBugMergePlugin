@@ -76,7 +76,7 @@ function init () {
 	for (index in mNeedDelDocumentArray) {
 		var documentObj = mNeedDelDocumentArray[index];
 		documentObj.Delete();
-	｝
+	}
 
 	sortDocumentBySameDocumentCountDesc(mSameTitleDocumentArray);
 	
@@ -90,14 +90,13 @@ function init () {
 function sortDocumentBySameDocumentCountDesc(arr){
     for (var i = 0; i < arr.length - 1; i++) {
          for(var j = i+1; j < arr.length; j++){
-            //注意转换类型
             if(arr[i].documentCount < arr[j].documentCount){
-                    var temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-               }
-          }
-     }
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
 }
 function WizSameDocument(documentObj, documentCount){
 	this.documentObj = documentObj;
