@@ -78,9 +78,31 @@ function init () {
 		documentObj.Delete();
 	};
 
-
-	// var collection = objApp.CreateWizObject('WizKMCore.WizDocumentCollection');
-	// objApp.Window.DocumentsCtrl.SetDocuments(collection);
+	sortDocumentBySameDocumentCountDesc();
+}
+function sortDocumentBySameDocumentCountDesc(){
+	var arr = mSameTitleDocumentArray;
+    var isSwap = false;
+    for (var i = 0; i < arr.length - 1; i++) {
+         isSwap = false;
+         for(var j = i+1; j < arr.length; j++){
+            //注意转换类型
+            if(arr[i].documentCount < arr[j].documentCount)){
+                    var temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                    isSwap = true;
+               }
+          }
+          if(!isSwap){
+               break;
+          }
+     };
+    var collection = objApp.CreateWizObject('WizKMCore.WizDocumentCollection');
+    for(index in arr){
+    	collection.Add(arr[index].documentObj);
+    }
+	objApp.Window.DocumentsCtrl.SetDocuments(collection);
 }
 function WizSameDocument(documentObj, documentCount){
 	this.documentObj = documentObj;
