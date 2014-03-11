@@ -78,16 +78,22 @@ function init () {
 		documentObj.Delete();
 	};
 
-	sortDocumentBySameDocumentCountDesc();
+	sortDocumentBySameDocumentCountDesc(mSameTitleDocumentArray);
+	
+	var collection = objApp.CreateWizObject('WizKMCore.WizDocumentCollection');
+    for(index in mSameTitleDocumentArray){
+    	collection.Add(mSameTitleDocumentArray[index].documentObj);
+    }
+	objApp.Window.DocumentsCtrl.SetDocuments2(collection, "NoSort", "");
+	alert("Merge Over");
 }
-function sortDocumentBySameDocumentCountDesc(){
-	var arr = mSameTitleDocumentArray;
+function sortDocumentBySameDocumentCountDesc(arr){
     var isSwap = false;
     for (var i = 0; i < arr.length - 1; i++) {
          isSwap = false;
          for(var j = i+1; j < arr.length; j++){
             //注意转换类型
-            if(arr[i].documentCount < arr[j].documentCount)){
+            if(arr[i].documentCount < arr[j].documentCount){
                     var temp = arr[i];
                     arr[i] = arr[j];
                     arr[j] = temp;
@@ -98,11 +104,6 @@ function sortDocumentBySameDocumentCountDesc(){
                break;
           }
      };
-    var collection = objApp.CreateWizObject('WizKMCore.WizDocumentCollection');
-    for(index in arr){
-    	collection.Add(arr[index].documentObj);
-    }
-	objApp.Window.DocumentsCtrl.SetDocuments(collection);
 }
 function WizSameDocument(documentObj, documentCount){
 	this.documentObj = documentObj;
